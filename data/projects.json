@@ -1,0 +1,18 @@
+{
+    "list": [{
+            "name": "Smoothie - Zero Knowledge Sudoku Game",
+            "url": "/smoothie",
+            "desc": "ZK Circuit built with a Plonk proof system"
+        },
+        {
+            "name": "Polkadot Validator",
+            "url": "/validator",
+            "desc": "Validating on Polkadot & Kusama"
+        },
+        {
+            "name": "Hard Math Game",
+            "url": "/hardmathgame",
+            "desc": "A mobile mathematical game"
+        }
+    ]
+}

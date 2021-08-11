@@ -1,0 +1,55 @@
+baseURL = 'http://example.org/'
+languageCode = 'en-us'
+title = 'mmagician'
+theme = "cactus"
+
+[[menu.main]]
+name = "Home"
+url = "/"
+weight = 1
+
+[[menu.main]]
+name = "Zero Knowledge Game"
+url = "/smoothie"
+weight = 2
+
+[[menu.main]]
+name = "Polkadot Validator"
+url = "/validator"
+weight = 3
+
+[[menu.main]]
+name = "Hard Math Game"
+url = "/hardmathgame"
+weight = 4
+
+# [[menu.main]]
+# name = "About"
+# url = "/about"
+# weight = 5
+
+[params]
+
+  colortheme = "white" # dark, light, white, or classic
+  googleAnalyticsAsync = true # use asynchronous tracking. Synchronous tracking by default
+  showAllPostsArchive = false # default
+
+  # Home page settings
+  description = "Marcin Górny - `mmagician` - is a mathematician by passion and software developer by training."
+  mainSection = "/about" # your main section
+  mainSectionTitle = "About"
+  tagsOverview = true # show tags overview by default.
+
+  # https://gohugo.io/functions/format/#hugo-date-and-time-templating-reference
+  dateFormat = "2006-01-02" # default
+
+  # Post page settings
+  show_updated = true # default
+  showReadTime = true # default
+
+  [[params.social]]
+    name = "github"
+    link = "https://github.com/mmagician"
+  [[params.social]]
+    name = "linkedin"
+    link = "https://www.linkedin.com/in/marcingorny"
