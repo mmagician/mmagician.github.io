@@ -37,7 +37,7 @@ weight = 4
   showAllPostsArchive = false # default
 
   # Home page settings
-  description = "Marcin Górny - `mmagician` - is a mathematician by passion and software developer by training."
+  description = "Marcin Górny, `mmagician` - is a mathematician by passion and software developer by training."
   mainSection = "/about" # your main section
   mainSectionTitle = "About"
   tagsOverview = true # show tags overview by default.
