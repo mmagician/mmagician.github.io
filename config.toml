@@ -4,6 +4,7 @@ canonifyURLs = true
 languageCode = 'en-us'
 title = 'mmagician'
 theme = "cactus"
+enableEmoji = true
 
 [[menu.main]]
 name = "Home"

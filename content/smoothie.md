@@ -1,5 +1,5 @@
 ---
-title: "Milestones"
+title: "ZK Sudoku Game"
 date: 2021-08-11T19:14:50+02:00
 draft: false
 ---
@@ -7,7 +7,7 @@ draft: false
 
 Zero Knowledge Proofs are still mysterious and hard to explain to non-cryptographers. I am building a user friendly platform to demonstrate the principle behind ZKPs as a game between a prover & a verifier.
 
-To this end, I am using a well-known game of Sudoku: users will solve the sudoku game in their browser and generate a proof of correctness. The verifier will be a smart contract that can verify the proofs and issue acknowledgements for valid solutions.
+To this end, I am using a well-known game of sudoku: users will solve the sudoku game in their browser and generate a proof of correctness. The verifier will be a smart contract that can verify the proofs and issue acknowledgements for valid solutions.
 
 ## Project details
 
@@ -31,7 +31,7 @@ All code will be open sourced. Wherever it makes sense (mostly M1-M3), we will f
 - working example
 - unit tests
 
-### Milestone 2 - Sudoku-tailored gadgets (in progress)
+### Milestone 2 - Sudoku-tailored gadgets (in progress :construction:)
 - each entry in a 9-element vector between 1-9 and unique
 - working example
 - unit tests
@@ -42,17 +42,22 @@ All code will be open sourced. Wherever it makes sense (mostly M1-M3), we will f
 - unit tests
 
 ## Part II - UI, Browser Integration & Deployment
-### Milestone 4 - Browser-friendly prover (in progress)
+### Milestone 4 - Browser-friendly prover (in progress :construction:)
 - compile the prover code to WASM
 - expose the prover interface to WASM, so that it can be called from JS
 - optimise the Rust program for size and performance
 - provide build & deploy (UI + prover WASM) instructions
 
-### Milestone 5 - UI + CLI verifier (in progress)
+### Milestone 5 - UI + CLI verifier (in progress :construction:)
 - build out a UI in React for interactive sudoku solving
 - ability to generate proofs (call the WASM prover)
 - at this stage, proofs can be verified by a CLI tool
 
 ### Milestone 6 - On-chain Verifier
-- Investigate the options for including the verification logic on-chain: Ethereum smart contract (akin to Tornado.cash), Polkadot substrate module (like [anon](https://github.com/webb-tools/anon)) or Rusk
+- investigate the options for including the verification logic on-chain: Ethereum smart contract (akin to Tornado.cash), Polkadot substrate module (like [anon](https://github.com/webb-tools/anon)) or Rusk
 - implement the verifier and deploy to a test/mainnet
+
+### Milestone 7 - Touch ups & optimisation
+- send proof of solvability together with the puzzle
+- investigate optimisation of the gadgets: can the circuit size be decreased?
+- user testing
