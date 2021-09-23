@@ -19,12 +19,16 @@ As mmagician, I'm running two validators, which are both part of the 1K Validato
 - `mmagician-0`: [DDufVxdkpbwuHYCnri1D4368MSNeXHQueA7AbhVG6r8jH1B](https://kusama.subscan.io/account/DDufVxdkpbwuHYCnri1D4368MSNeXHQueA7AbhVG6r8jH1B)
 - `mmagician-1`: [HTpGQZf3Ea8b92oxmjRiSdfPPjU1Wy6kVVThZpdvnTCrF7P](https://kusama.subscan.io/account/HTpGQZf3Ea8b92oxmjRiSdfPPjU1Wy6kVVThZpdvnTCrF7P)
 
-With AMJ, we also have two Kusama validators. `K0` is part of the 1KV as well.
+With AMJ, we also have two Kusama validators. `K0` is part of the 1KV, while `3 boys 👦👦👦 1 node 💻` has gained enough nominations to enter the active set organically.
 - `K0`: [D8aDoqzNTeqbuxbZ79nHQZp95Nwew1nx3cz2uByMU5qBfhj](https://kusama.subscan.io/account/D8aDoqzNTeqbuxbZ79nHQZp95Nwew1nx3cz2uByMU5qBfhj) 
 - `3 boys 👦👦👦 1 node 💻`: [Fwk8piU6ZfcD5o8cnYL83VjmxkZenBpyby74nnbMMP9AkZR](https://kusama.subscan.io/account/Fwk8piU6ZfcD5o8cnYL83VjmxkZenBpyby74nnbMMP9AkZR) 
 
 ## Polkadot
 
+As mmagician, I'm again running two validators:
+- `mmagician-0`: [14JduA89X8KoFdbtFSmNrLdaCYdYEcNRftkNwHubxBsAn4Ca](https://polkadot.subscan.io/account/14JduA89X8KoFdbtFSmNrLdaCYdYEcNRftkNwHubxBsAn4Ca)
+- `mmagician-1`: [1qWTg2KdN7FD6zUd2Xdv8Fd3WRoTjuBoq4xLxne1p1naBsi](https://polkadot.subscan.io/account/1qWTg2KdN7FD6zUd2Xdv8Fd3WRoTjuBoq4xLxne1p1naBsi)
+
 With AMJ, we have 1 Polkadot validator:
-- `P0`: [1ZFhpmBbsuPHo9fk3PjXc2xr76MYZkkaAWioXuNRktrcwsG](https://polkascan.io/polkadot/account/1ZFhpmBbsuPHo9fk3PjXc2xr76MYZkkaAWioXuNRktrcwsG)
+- `Bob👷‍The BlockBuilder⛏️`: [1ZFhpmBbsuPHo9fk3PjXc2xr76MYZkkaAWioXuNRktrcwsG](https://polkascan.io/polkadot/account/1ZFhpmBbsuPHo9fk3PjXc2xr76MYZkkaAWioXuNRktrcwsG)
 
