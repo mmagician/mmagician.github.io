@@ -12,8 +12,8 @@ url = "/"
 weight = 1
 
 [[menu.main]]
-name = "Zero Knowledge Game"
-url = "/smoothie"
+name = "arkworks"
+url = "/arkworks"
 weight = 2
 
 [[menu.main]]

@@ -5,8 +5,8 @@ draft: false
 ---
 # About
 
-I currently work as a Technical Evaluator at the Web3 Foundation, evaluating [Grants](https://github.com/w3f/Grants-Program).
+I currently work as a Research Engineer at the Web3 Foundation, coding up cryptographic primitives and seeing how they can be integrated into substrate.
 
-As a side project, I'm working on [the Zero Knowledge Sudoku Game](/smoothie) and running a few [validator nodes](/validator).
+On a side I contribute to [arkworks](/arkworks) and run a few [validator nodes](/validator).
 
-When I'm not coding, I'm probably out doing some sports.
+When I'm not coding, I'm probably out doing some sports or reading.
