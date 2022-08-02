@@ -46,3 +46,7 @@
   {{ end }}
   {{ end }}
 </head>
+
+{{ if .Page.Params.math }}
+    {{ partial "katex.html" . }}
+{{ end }}
