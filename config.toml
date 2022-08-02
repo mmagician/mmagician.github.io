@@ -39,12 +39,12 @@ weight = 4
 
   # Home page settings
   description = "Marcin Górny, `mmagician` - is a mathematician by passion and software developer by training."
-  mainSection = "/about" # your main section
-  mainSectionTitle = "About"
+  mainSection = "/posts" # your main section
+  mainSectionTitle = "Writings"
   tagsOverview = true # show tags overview by default.
 
   # https://gohugo.io/functions/format/#hugo-date-and-time-templating-reference
-  dateFormat = "2006-01-02" # default
+  dateFormat = "02-01-2006" # default
 
   # Post page settings
   show_updated = true # default
