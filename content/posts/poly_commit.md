@@ -66,7 +66,7 @@ The argument here can be easily extended to more than two points: $r(x)$ then be
 
 ## Multiple polynomials, one opening
 
-I'm not sure whether this has any practical applications, but it serves well as an intermediate step on our way to opening multiple polynomials at multiple points.
+This section serves well as an intermediate step on our way to opening multiple polynomials at multiple points. It is used in practice in Plonk, where seemingly when only two points are opened, it is more efficient to use the scheme described here twice, rather than applying the multi-openings optimisations.
 
 Instead of dealing with a single polynomial $p(x)$, the prover now wants to commit to multiple polynomials (let's assume they have the same degree) and later prove their openings at a single point $z$.
 
