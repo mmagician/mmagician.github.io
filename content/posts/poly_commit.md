@@ -97,10 +97,15 @@ The point of all that being: the verifier receives $[h(s)]_1$, which implicitly 
 Let's wrap up this section with the pairing check:
 
 $$
-\begin{aligned} e(C_i - [y]_1, G_2) \cdot ... \cdot e(C_k - [y]_1, G_2) \stackrel{?}{=} e(\pi, [s-z]_2) \end{aligned}\label{1}\tag{1}
+\begin{aligned} e(\gamma^0 \cdot (C_i - [y]_1), G_2) \cdot ... \cdot e(\gamma^{k-1} \cdot (C_k - [y]_1), G_2) \stackrel{?}{=} e(\pi, [s-z]_2) \end{aligned}\label{1}\tag{1}
 $$
 
-As it can be seen, having $k$ polynomials requires the prover to publish $k$ commitments, and the verifier needs to compute a product of pairings instead of a single one.
+Which, thanks to the bilinearity property of pairings, can be simplified to:
+$$
+\begin{aligned} e(\gamma^0 \cdot (C_i - [y]_1) + ... + \gamma^{k-1} \cdot (C_k - [y]_1), G_2) \stackrel{?}{=} e(\pi, [s-z]_2) \end{aligned}\label{1}\tag{1}
+$$
+
+As it can be seen, having $k$ polynomials requires the prover to publish $k$ commitments, but the verifier still computes just one pairing check.
 
 ## Multiple polynomials, multiple openings
 
