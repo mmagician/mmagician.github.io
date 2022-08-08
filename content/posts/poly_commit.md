@@ -11,13 +11,13 @@ This is not an introduction to PCS. Instead, I will use some statements from van
 
 # Polynomial committment schemes
 
-The primary focus of this article is to explore various flavours of KZG polynomial committment scheme:
+The primary focus of this article is to explore various flavours of KZG polynomial commitment scheme:
 - single polynomial, single opening (vanilla)
 - single polynomial, multiple openings
 - multiple polynomials, single opening
 - multiple polynomials, multiple openings
 
-and show how the committment changes, how are the proofs constructed, and what the verifier needs to do to get convinced of the proof's validity.
+and show how the commitment changes, how are the proofs constructed, and what the verifier needs to do to get convinced of the proof's validity.
 
 ## Vanilla KZG
 
@@ -57,7 +57,7 @@ $$h(x) = \frac{p(x) - r(x)}{Z_s(x)}$$
 
 where $Z_s(x) = (x-z_1)\cdot(x-z_2)$
 
-Prover's definitions of committment $C$ and proof $\pi$ don't change from the single-point version.
+Prover's definitions of commitment $C$ and proof $\pi$ don't change from the single-point version.
 The verifier's check differs minimally (it can actually be generalised) to include the fact that we no longer have a single point but multiple ones:
 
 $$ e(C - [r(s)]_1, G_2) \stackrel{?}{=} e(\pi, [Z_s(s)]_2)$$
@@ -70,9 +70,9 @@ This section serves well as an intermediate step on our way to opening multiple 
 
 Instead of dealing with a single polynomial $p(x)$, the prover now wants to commit to multiple polynomials (let's assume they have the same degree) and later prove their openings at a single point $z$.
 
-The committment phase changes, as now for each polynomial $p_i(x), i  \in {1, ..., k}$, we generate $C_i = [p_i(s)]$.
+The committent phase changes, as now for each polynomial $p_i(x), i  \in {1, ..., k}$, we generate $C_i = [p_i(s)]$.
 
-<!-- Reall that for vanilla KZG, we constructed $p(x) - p(z)$ s.t. when divided by its root $(x - z)$, we got a quotient polynomial $h(x)$ with no remainder, or stated differently:
+<!-- Recall that for vanilla KZG, we constructed $p(x) - p(z)$ s.t. when divided by its root $(x - z)$, we got a quotient polynomial $h(x)$ with no remainder, or stated differently:
 $$ p(x) - p(z) = 0 \mod (x-z)$$
 
 That it only happens at a maximum of $d = |degree(p)|$ points, or in other words with probability $\frac{d}{𝔽}$. This should give the verifier confidence that the proof $[h(s)]_12$ isn't just a random group element, but rather that the prover knows the original polynomial $p$ and can compute its evaluations at challenge points $z$. -->
