@@ -109,7 +109,7 @@ As it can be seen, having $k$ polynomials requires the prover to publish $k$ com
 
 ## Multiple polynomials, multiple openings
 
-(Note that multiple variants exist with different tradeoffs, here I summarise the first scheme from [this paper](https://eprint.iacr.org/2020/081.pdf)).
+*Note: Multiple variants exist with different tradeoffs, here I summarise the first scheme from [this paper](https://eprint.iacr.org/2020/081.pdf). That same scheme is further improved in the same paper, optimising for verifier speed at the expense of an additional element required in the proof. I might write about it in the future.*
 
 As with the preceding scheme, the prover commits to each polynomial $p_i(x)$ separately: $C_1, ..., C_k$.
 
@@ -178,3 +178,5 @@ e(\gamma^0 \cdot C_1 - [r_1(s)]_1, [Z_1(s)]_2) \cdot ... \cdot e(\gamma^{k-1} \c
 $$
 
 For a full proof, refer to the [Plonk](https://eprint.iacr.org/2019/953.pdf) paper, Claim 4.6.
+
+Notice that the described protocol is not optimal for the verifier - I might explore optimisations in a future post.
