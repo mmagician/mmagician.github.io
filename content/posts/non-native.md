@@ -44,6 +44,23 @@ But there are many invalid points too:
 * ()
 * ()
 
+The main point here is that all arithmetic done on the curve requires reductions modulo $q$. Determining whether a point lies on the curve is just one example of such a computation.
+Imagine another application, where (for reasons that will be explained later) we are given a rational function $f: E(𝔽_q) \to 𝔽_q$ which takes as input a point on the curve $P$ and operates on its coordinates $x, y$ to output a field element. It is meaningless to perform arithmetic on coordinates $x, y \in 𝔽_q$ over a modulus different than $q$.
+
+## Excerpt from pairings
+
+I will make a big leap here and jump right from the definition of the base field to elliptic curve pairings. Don't worry though, we will neither cover the formal definition nor all the details. In order to understand where non-native arithmetic is used in SNARKs, it is enough to state the following:
+- verifier must perform a pairing check $e(\cdot, \cdot) \stackrel{?}{=} e(\cdot, \cdot)$ to convince themselves of the validity of some statement
+- the inputs to a pairing $e$ are group elements belonging to two (potentially distinct) cryptographic groups $G_1$ and $G_2$
+- they are the subgroups of some $E(𝔽_{q^k})$ (note that $k$ might be 1 for one or both of the groups)
+- arithmetic on $E(𝔽_{q^k})$ is done over the field $𝔽_q$ no matter the embedding degree $k$
+- the key subroutine of all pairings is a Miller loop: it works by iteratively applying some rational function and accumulating the result as a field element
+- the rational functions in the Miller loop are straight lines:
+    - depending on the first input from $G_1$, s.t. they intersecting with the curve at multiples of the input
+    - the obtained line equations are evaluated at the coordinates of the second input element from $G_2$
+
+It naturally follows that the arithmetic in the iterations of the Miller loop are performed over the base field $𝔽_q$. Thus, the verifier's native field is the base field $𝔽_q$ of the curve $E(𝔽_q)$.
+
 ## Scalar field
 
 Before defining the scalar field, we need to define one more concept: groups.
@@ -53,7 +70,7 @@ Without diving into the formalism, let's state the practical properties of the g
 * there exists an integer (scalar) $r$, s.t. $r \cdot g = 1$ and $r$ is prime. Call it the order of $G$.
 * it is cyclic (as a result of the previous two points)
 
-So what we are after is usually referred to as a prime order subgroup $G$ of $E(𝔽_q)$.
+So what we are after is usually referred to as a subgroup $G$ of $E(𝔽_q)$ of prime order $r$.
 In practice when working with SNARKs (and a lot of other ECC constructions), the data passed between the parties (such as the prover and the verifier) will be encoded as group elements.
 
 Specifically, this is how the circuit will be represented.
