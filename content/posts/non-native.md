@@ -37,11 +37,9 @@ This means that each point on the curve $E(𝔽_q)$ has its coordinates constrai
 E.g. let's take a field with $q = 47$, and a curve equation $E(𝔽_q): y^2 = x^3 + 5x$
 A valid point on the curve is one which satisfies the curve equation. 
 Some valid points are:
-* (1,46)
 * (4, 18)
 
 But there are many invalid points too:
-* ()
 * ()
 
 The main point here is that all arithmetic done on the curve requires reductions modulo $q$. Determining whether a point lies on the curve is just one example of such a computation.
@@ -77,8 +75,10 @@ Specifically, this is how the circuit will be represented.
 
 ## Circuit representation
 
+[Recall](https://medium.com/@VitalikButerin/quadratic-arithmetic-programs-from-zero-to-hero-f6d558cea649) that in order to represent an arithmetic circuit corresponding to the statement that we wish to prove, we need to represent the circuit as a set of polynomials.
 
-There exist method 
+
+
 
 # Non-native arithmetic: the *why*
 
