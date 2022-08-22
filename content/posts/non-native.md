@@ -5,7 +5,7 @@ draft: true
 math: true
 ---
 
-As with the previous post, this isn't intended to serve as an introduction to SNARKs, recursive proofs nor pairing-friendly curve cycles. Rather, it's an attempt to explain a topic that comes up often in conjunction with the aforementioned terms, namely the usage of non-native field arithmetic. I'll first explain the *why*: the applications and settings where non-native arithmetic is used. Then I will try to define what it is in the context of comparing it to native arithmetic, and explain some basic math that helps to understand how both types arise. Finally, I'll close with a small summary of the techniques used for implementing non-native arithmetic in practice.
+As with the previous post, this isn't intended to serve as an introduction to SNARKs, recursive proofs nor pairing-friendly curves. Rather, it's an attempt to explain a topic that comes up often in conjunction with the aforementioned terms, namely **non-native field arithmetic**. I'll first explain the *why*: the context of where non-native arithmetic arises. Then I will try to define the *what*: by comparing it to native arithmetic and describing in what part of SNARKs each of them is used. Finally, I'll close with a brief summary of the techniques used for realising non-native arithmetic efficiently.
 
 # Non-native arithmetic: the *why*
 
