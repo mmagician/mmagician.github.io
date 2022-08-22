@@ -41,10 +41,10 @@ This means that each point on the curve $E(𝔽_q)$ has its coordinates constrai
 E.g. let's take a field with $q = 47$, and a curve equation $E(𝔽_q): y^2 = x^3 + 5x$
 A valid point on the curve is one which satisfies the curve equation. 
 Some valid points are:
-* (4, 18)
+* (28, 7)
 
 But there are many invalid points too:
-* ()
+* (28, 8)
 
 The main point here is that all arithmetic done on the curve requires reductions modulo $q$. Determining whether a point lies on the curve is just one example of such a computation.
 Imagine another application, where (for reasons that will be explained later) we are given a rational function $f: E(𝔽_q) \to 𝔽_q$ which takes as input a point on the curve $P$ and operates on its coordinates $x, y$ to output a field element. It is meaningless to perform arithmetic on coordinates $x, y \in 𝔽_q$ over a modulus different than $q$.
