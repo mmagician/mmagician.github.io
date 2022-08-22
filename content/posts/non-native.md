@@ -83,7 +83,7 @@ Ultimately, we would like to be able to commit to such polynomials and open them
 
 Specifically, when we commit to a polynomial, we will output a group element, and when we open a polynomial, we will output both a field element and a group element. What really matters though, is that the order of both is $r$, mentioned in the previous section.
 
-This boils down to the coefficients of our polynomial being in the range $\[0, r)$, and so all arithmetic is performed mod $r$. Notice that it wouldn't be of much use to multiply a group element by something bigger than $r$, say $r+5$, since $r \cdot g = 1$.
+This boils down to the coefficients of our polynomial being in the range $\[0, r\)$, and so all arithmetic is performed mod $r$. Notice that it wouldn't be of much use to multiply a group element by something bigger than $r$, say $r+5$, since $r \cdot g = 1$, so $(r+5) \cdot g = 5 \cdot g$.
 
 In a typical instantiation of a polynomial commitment scheme, it is the prover's job to caluclate the commitment of their secret polynomial, then evaluate the polynomial at a concrete challenge $z$ and send the claimed evaluation $y = p(z)$ to the verifier (together with the proof).
 
