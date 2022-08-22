@@ -1,5 +1,5 @@
 ---
-title: "Non-native arithmetic"
+title: "(Non-) native arithmetic in recursive proofs"
 date: 2022-08-22T11:03:00+02:00
 draft: false
 math: true
