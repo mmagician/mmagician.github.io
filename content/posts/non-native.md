@@ -87,7 +87,7 @@ This boils down to the coefficients of our polynomial being in the range $\[0, r
 
 In a typical instantiation of a polynomial commitment scheme, it is the prover's job to caluclate the commitment of their secret polynomial, then evaluate the polynomial at a concrete challenge $z$ and send the claimed evaluation $y = p(z)$ to the verifier (together with the proof).
 
-With this slightly informal argument we establish that the prover needs to work with the scalar field.
+With this slightly informal argument we establish that the prover needs to perform work over the scalar field.
 
 # Non-native arithmetic: the *how*
 
