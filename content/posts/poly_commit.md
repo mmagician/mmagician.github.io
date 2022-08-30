@@ -7,7 +7,7 @@ math: true
 
 This is my first entry here, so I would highly appreciate any feedback.
 
-This is not an introduction to PCS. Instead, I will use some statements from vanilla KZG and build upon these for multiple points and multiple polynomials. If you are new to PCS, I recommend the intro by [Dankrad Feist](https://dankradfeist.de/ethereum/2020/06/16/kate-polynomial-commitments.html) or the [original KZG paper](https://www.iacr.org/archive/asiacrypt2010/6477178/6477178.pdf).
+This is not an introduction to Polynomial Commitment Schemes (PCS). Instead, I will use some statements from vanilla [KZG](https://www.iacr.org/archive/asiacrypt2010/6477178/6477178.pdf) scheme and build upon these for multiple points and multiple polynomials. If you are new to PCS, I recommend the intro by [Dankrad Feist](https://dankradfeist.de/ethereum/2020/06/16/kate-polynomial-commitments.html) or the [original KZG paper](https://www.iacr.org/archive/asiacrypt2010/6477178/6477178.pdf).
 
 # Polynomial committment schemes
 
