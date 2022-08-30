@@ -38,12 +38,12 @@ Elliptic curves useful for cryptographic applications are usually defined over a
 
 This means that each point on the curve $E(𝔽_q)$ has its coordinates constrained to lie within the range $[0,q)$.
 
-E.g. let's take a field with $q = 47$, and a curve equation $E(𝔽_q): y^2 = x^3 + 5x$
+E.g. let's take a field with $q = 47$, and a curve equation $E(𝔽_q): y^2 = x^3 + 5x$.
 A valid point on the curve is one which satisfies the curve equation. 
-Some valid points are:
+One such valid element:
 * (28, 7)
 
-But there are many invalid points too:
+But there are many tuples which do not result in a valid point on our curve ($8^2 \neq 28^3 + 5*28$ mod $47$):
 * (28, 8)
 
 The main point here is that all arithmetic done on the curve requires reductions modulo $q$. Determining whether a point lies on the curve is just one example of such a computation.
@@ -66,13 +66,16 @@ It naturally follows that the arithmetic in the iterations of the Miller loop ar
 ## Scalar field
 
 Before defining the scalar field, we need to define one more concept: groups.
-It would be great if each set of valid elliptic curve points automatically formed a group.
-Without diving into the formalism, let's state the practical properties of the group $G$ that we care about here:
+Each set of valid elliptic curve points $E(𝔽_q)$ automatically forms an abelian group $G$ under addition.
+Without diving into the formalism, let's state some practical properties of the group $G$ that we care about here:
 * some element of this group can generate all other group members via repeated addition of itself, call it the generator $g$
-* there exists an integer (scalar) $r$, s.t. for any $g \in G$, $r \cdot g = 1$ and $r$ is prime. Call it the order of $G$.
-* it is cyclic (as a result of the previous two points)
+* the order of the group is denoted as $n = $ #$E(𝔽_q)$
+* each element of the group has its own order, and it divides order $n$ of the whole group
+* some elements have a prime order. If such an element is chosen as the generator, it will generate a *cyclic* subgroup
+* in fact, all elements of the cyclic subgroup are its generators
+* if $r$ is the order of the subgroup, then for any $g$ in the subgroup, $r \cdot g = 1$
 
-So what we are after is usually referred to as a subgroup $G$ of $E(𝔽_q)$ of prime order $r$. When defining curves for PBC, we usually specify the scalar field $𝔽_r$ (alongside the previously mentioned $𝔽_q$).
+So what we are after is a subgroup $G$ of $E(𝔽_q)$ with a **large** prime order $r$. When we define curves suitable for pairing-based cryptography (PBC), we usually specify this $r$ in the curve parameters as the size of the scalar field $𝔽_r$ (alongside the previously mentioned $𝔽_q$).
 In practice, when working with SNARKs the data that is passed between the parties (such as the prover and the verifier) will be encoded as group elements, and the circuit representing our computation will be defined over the scalar field $𝔽_r$.
 
 ## Scalar field in circuits
