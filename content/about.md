@@ -5,8 +5,9 @@ draft: false
 ---
 # About
 
-I currently work as a Research Engineer at the Web3 Foundation, coding up cryptographic primitives and seeing how they can be integrated into substrate.
 
-On a side I contribute to [arkworks](/arkworks) and run a few [validator nodes](/validator).
+Currently I'm enjoying a self-imposed sabbatical. I spend my days learning cryptography, tinkering with proof systems and thinking about protocol design. I am a contributor and co-maintainer of [arkworks](/arkworks).
 
 When I'm not coding, I'm probably out doing some sports or reading.
+
+I'm available for consulting work to help advance interesting projects (circuit optimization, cryptographic primitive implementation in Rust, protocol design, etc.) in a small capacity.
