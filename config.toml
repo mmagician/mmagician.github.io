@@ -16,15 +16,15 @@ name = "arkworks"
 url = "/arkworks"
 weight = 2
 
-[[menu.main]]
-name = "Polkadot Validator"
-url = "/validator"
-weight = 3
+# [[menu.main]]
+# name = "Polkadot Validator"
+# url = "/validator"
+# weight = 3
 
 [[menu.main]]
 name = "Hard Math Game"
 url = "/hardmathgame"
-weight = 4
+weight = 3
 
 # [[menu.main]]
 # name = "About"
