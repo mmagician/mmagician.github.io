@@ -5,8 +5,8 @@ draft: false
 ---
 # About
 
-I currently work as a Research Engineer at the Web3 Foundation, coding up cryptographic primitives and seeing how they can be integrated into substrate.
+I lead a small research- and implementation-focused team Hungry Cats Studio, where we work on polynomial commitment schemes, proof composition, ZKML, signature schemes and other fun things.
 
-On a side I contribute to [arkworks](/arkworks) and run a few [validator nodes](/validator).
+I contribute to, and maintain, the [arkworks](/arkworks) ecosystem of libraries for building cryptographic primitives for SNARKs.
 
 When I'm not coding, I'm probably out doing some sports or reading.

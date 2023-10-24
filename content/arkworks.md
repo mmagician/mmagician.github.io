@@ -25,4 +25,12 @@ Later on, as I've gained a familiarity with the arkworks ecosystem, I got involv
 
 Some examples of refactorings I've done include: [SquareRootField & Field unification](https://github.com/arkworks-rs/algebra/pull/422), [Refactoring the MSM interface](https://github.com/arkworks-rs/algebra/pull/425) or [introducing an explicit cofactor clearing method](https://github.com/arkworks-rs/algebra/pull/420) (for which I've also added a [~5x improvement](https://github.com/arkworks-rs/curves/pull/103/) to one of the curves).
 
-The biggest "new" feature I contributed was hash-to-field in two parts: [hash-to-curve](https://github.com/arkworks-rs/algebra/pull/405) & [map-to-field](https://github.com/arkworks-rs/algebra/pull/430). Kudos to my colleagues at the W3F for the early work and theoretical support on those, especially regarding isogenies.
+Some notable features I contributed to: 
+- hash-to-field in two parts: [hash-to-curve](https://github.com/arkworks-rs/algebra/pull/405) & [map-to-field](https://github.com/arkworks-rs/algebra/pull/430). Kudos to my colleagues at the W3F for the early work and theoretical support on those, especially regarding isogenies,
+- [Zcash-compatible serialization for BLS12-381](https://github.com/arkworks-rs/curves/pull/129),
+- faster co-factor clearing for the BLS12 curves: https://github.com/arkworks-rs/curves/pull/103 and https://github.com/arkworks-rs/curves/pull/141,
+- [optimized Miller loop for BW6 family of curves](https://github.com/arkworks-rs/curves/pull/155),
+- [otpimzed Miller loop for the MNT curves](https://github.com/arkworks-rs/algebra/pull/445),
+- [co-authored Ligero PCS implementation](https://github.com/arkworks-rs/poly-commit/pull/125) with my colleagues at Hungry Cats Studio,
+
+I am one of the official library maintainers. This entails PR reviews, direction setting and release management.
