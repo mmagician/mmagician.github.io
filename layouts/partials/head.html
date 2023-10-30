@@ -45,8 +45,6 @@
     {{ template "_internal/google_analytics.html" . }}
   {{ end }}
   {{ end }}
-</head>
 
-{{ if .Page.Params.math }}
-    {{ partial "katex.html" . }}
-{{ end }}
+  {{ if .Params.mathjax }}{{ partial "mathjax_support.html" . }}{{ end }}
+</head>
