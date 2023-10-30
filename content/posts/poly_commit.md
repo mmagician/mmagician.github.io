@@ -85,9 +85,10 @@ $$ G(x) = \sum_{i}^{k} \gamma^{i-1} \cdot F_i(x)$$
 
 And also an arbitrary linear factor $Z(x) = (x-z)$. Notice that if even all functions $F_i$ were divisible by $Z(x)$ except one function, say, $F_j$, then the probability that $Z(x) | G(x)$ is $\frac{k}{𝔽}$, because:
 $$ F_j \mod Z(x) = R(x) \neq 0$$ 
+
 $$ G(x) = \sum_{i \neq j} \gamma^{i-1} \cdot F_i(x) + \gamma^{j-1}\cdot R(x) \mod Z(x)$$
 
-We fix some $\Chi \in 𝔽$ s.t. $Z(\Chi) = 0$ but $R(\Chi) \neq 0$. If we wish $G(\Chi) = 0$, then with a slight abuse of notation we have:
+We fix some $\chi \in 𝔽$ s.t. $Z(\chi) = 0$ but $R(\chi) \neq 0$. If we wish $G(\chi) = 0$, then with a slight abuse of notation we have:
 $$ 0 = \sum_{i=1, i \neq j}^k \gamma^{i-1} \cdot F_i + \gamma^{j-1}\cdot R$$
 
 which is just a polynomial in $\gamma$ of degree $k$, which has at most $k$ solutions.
@@ -97,12 +98,12 @@ The point of all that being: the verifier receives $[h(s)]_1$, which implicitly 
 Let's wrap up this section with the pairing check:
 
 $$
-\begin{aligned} e(\gamma^0 \cdot (C_i - [y]_1), G_2) \cdot ... \cdot e(\gamma^{k-1} \cdot (C_k - [y]_1), G_2) \stackrel{?}{=} e(\pi, [s-z]_2) \end{aligned}\label{1}\tag{1}
+\begin{aligned} e(\gamma^0 \cdot (C_i - [y]_1), G_2) \cdot ... \cdot e(\gamma^{k-1} \cdot (C_k - [y]_1), G_2) \stackrel{?}{=} e(\pi, [s-z]_2) \end{aligned}
 $$
 
 Which, thanks to the bilinearity property of pairings, can be simplified to:
 $$
-\begin{aligned} e(\gamma^0 \cdot (C_i - [y]_1) + ... + \gamma^{k-1} \cdot (C_k - [y]_1), G_2) \stackrel{?}{=} e(\pi, [s-z]_2) \end{aligned}\label{1}\tag{1}
+\begin{aligned} e(\gamma^0 \cdot (C_i - [y]_1) + ... + \gamma^{k-1} \cdot (C_k - [y]_1), G_2) \stackrel{?}{=} e(\pi, [s-z]_2) \end{aligned}
 $$
 
 As it can be seen, having $k$ polynomials requires the prover to publish $k$ commitments, but the verifier still computes just one pairing check.
@@ -123,18 +124,18 @@ Define the "combined" $h(x)$:
 
 $$
 \begin{aligned}
-h(x) = \sum_{i=1}^{k}\gamma^{i-1}\frac{p_i(x) - r_i(x)}{Z_{s_i}(x)} \end{aligned}\label{2}\tag{2}
+h(x) = \sum_{i=1}^{k}\gamma^{i-1}\frac{p_i(x) - r_i(x)}{Z_{s_i}(x)} \end{aligned}\label{1}\tag{1}
 $$
 
 Unfortunately, having distinct openings for each $p_i$ complicates the pairing check, since we cannot just plug in $Z_{s}$ into the RHS of $\eqref{1}$, because now $Z_{s_i}$ are distinct!
 
-However, imagine for a minute that we allow ourselves to compute a product of pairings on the RHS (instead of a single pairing), where we define each $h_i$ as the fraction from the sum of $\eqref{2}$, and $\pi_i$ as its commitment.
+However, imagine for a minute that we allow ourselves to compute a product of pairings on the RHS (instead of a single pairing), where we define each $h_i$ as the fraction from the sum of $\eqref{1}$, and $\pi_i$ as its commitment.
 
 $$
 \begin{aligned}
-h_i = \frac{p_i(x) - r_i(x)}{Z_{s_i}(x)} \newline
+h_i = \frac{p_i(x) - r_i(x)}{Z_{s_i}(x)} \newline \newline
 \pi = [h_i(s)]_1
-\end{aligned}\label{}\tag{}
+\end{aligned}
 $$
 
 Then we have 
@@ -144,13 +145,14 @@ e(C_1 - [r_1(s)]_1, G_2) \stackrel{?}{=} e(\pi_1, [Z_1(s)]_2) \newline
 e(C_2 - [r_2(s)]_1, G_2) \stackrel{?}{=} e(\pi_2, [Z_2(s)]_2) \newline
 ... \newline
 e(C_k - [r_k(s)]_1, G_2) \stackrel{?}{=} e(\pi_k, [Z_k(s)]_2) \newline 
-\end{aligned}\label{3}\tag{3}
+\end{aligned}
 $$
 
 Which, in polynomial notation, checks the following equality:
 $$p_i(x) - r_i(x) = h_i(x)\cdot Z_{s_i}$$
 
 We can use a trick to multiply both sides by $Z_T(x) = (x-z_1)\cdot...\cdot(x-z_t) = \prod_{i=1}^t{(x-z_i)}$:
+
 $$(p_i(x) - r_i(x))\cdot Z_T(x) = h_i(x)\cdot Z_{s_i} \cdot Z_T(x)$$
 
 and then divide by $Z_{s_i}$:
@@ -158,12 +160,12 @@ and then divide by $Z_{s_i}$:
 $$
 \begin{aligned}
 (p_i(x) - r_i(x))\cdot Z_{T/S_i}(x) = h_i(x)\cdot Z_T(x) 
-\end{aligned}\label{4}\tag{4}
+\end{aligned}\label{2}\tag{2}
 $$
 
 and $Z_i = Z_{T/S_i}(x)$ is defined as $\prod_{i: z_i \notin S_i}{(x-z_i)}$
 
-We rewrite Equation $\eqref{4}$ in pairing notation:
+We rewrite Equation $\eqref{2}$ in pairing notation:
 
 $$
 \begin{aligned}
