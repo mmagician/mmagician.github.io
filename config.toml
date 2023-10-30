@@ -1,8 +1,8 @@
-baseURL = 'https://mmagician.github.io'
+baseURL = 'https://HungryCatsStudio.github.io'
 relativeURLs = true
 canonifyURLs = true
 languageCode = 'en-us'
-title = 'mmagician'
+title = 'Hungry Cats Studio'
 theme = "cactus"
 enableEmoji = true
 
@@ -12,24 +12,9 @@ url = "/"
 weight = 1
 
 [[menu.main]]
-name = "arkworks"
-url = "/arkworks"
-weight = 2
-
-# [[menu.main]]
-# name = "Polkadot Validator"
-# url = "/validator"
-# weight = 3
-
-[[menu.main]]
-name = "Hard Math Game"
-url = "/hardmathgame"
+name = "About"
+url = "/about"
 weight = 3
-
-# [[menu.main]]
-# name = "About"
-# url = "/about"
-# weight = 5
 
 [params]
 
@@ -38,7 +23,7 @@ weight = 3
   showAllPostsArchive = false # default
 
   # Home page settings
-  description = "Marcin Górny, `mmagician` - is a mathematician by passion and software developer by training."
+  description = "Hungry Cats Studio"
   mainSection = "/posts" # your main section
   mainSectionTitle = "Writings"
   tagsOverview = true # show tags overview by default.
@@ -52,7 +37,7 @@ weight = 3
 
   [[params.social]]
     name = "github"
-    link = "https://github.com/mmagician"
+    link = "https://github.com/HungryCatsStudio"
   [[params.social]]
-    name = "linkedin"
-    link = "https://www.linkedin.com/in/marcingorny"
+    name = "twitter"
+    link = "https://twitter.com/0xHungryCats"

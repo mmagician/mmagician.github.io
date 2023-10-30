@@ -5,8 +5,6 @@ draft: false
 ---
 # About
 
-I lead a small research- and implementation-focused team Hungry Cats Studio, where we work on polynomial commitment schemes, proof composition, ZKML, signature schemes and other fun things.
+We are a small research- and implementation-focused team.  We work on polynomial commitment schemes, proof composition, ZKML, signature schemes and other fun things.
 
-I contribute to, and maintain, the [arkworks](/arkworks) ecosystem of libraries for building cryptographic primitives for SNARKs.
-
-When I'm not coding, I'm probably out doing some sports or reading.
+Hungry Cats Studio was founded by Marcin Górny, `mmagician`. He is a contributor and maintainer of the [arkworks](/arkworks) ecosystem of libraries for building cryptographic primitives for SNARKs.
