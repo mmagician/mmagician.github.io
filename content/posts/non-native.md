@@ -52,13 +52,13 @@ Imagine another application, where (for reasons that will be explained later) we
 ### Base field in pairings
 
 I will make a big leap here and jump right from the definition of the base field to elliptic curve pairings. Don't worry though, we will neither cover the formal definition nor all the details. In order to understand where non-native arithmetic is used in SNARKs, it is enough to accept the following:
-- verifier must perform a pairing check $e(\cdot, \cdot) \stackrel{?}{=} e(\cdot, \cdot)$ to convince themselves of the validity of some statement
-- the inputs to a pairing $e$ are group elements belonging to two (potentially distinct) cryptographic groups $G_1$ and $G_2$
-- they are the subgroups of some $E(𝔽_{q^k})$ (note that $k$ might be 1 for one or both of the groups)
-- arithmetic on $E(𝔽_{q^k})$ is done over the field $𝔽_q$ no matter the embedding degree $k$
-- the key subroutine of all pairings is a Miller loop: it works by iteratively applying some rational function and accumulating the result as a field element
+- verifier must perform a pairing check $e(\cdot, \cdot) \stackrel{?}{=} e(\cdot, \cdot)$ to convince themselves of the validity of some statement,
+- the inputs to a pairing $e$ are group elements belonging to two (potentially distinct) cryptographic groups $G_1$ and $G_2$,
+- they are the subgroups of some $E(𝔽_{q^k})$ (note that $k$ might be 1 for one or both of the groups),
+- arithmetic on $E(𝔽_{q^k})$ is done over the field $𝔽_q$ no matter the embedding degree $k$,
+- the key subroutine of all pairings is a Miller loop: it works by iteratively applying some rational function and accumulating the result as a field element,
 - the rational functions in the Miller loop are straight lines:
-    - their equation depends on the first input $P$ (from $G_1$). They define the intersection of the a line through $P$ and some multiple of $P$, with the curve $E(𝔽_{q^k})$.
+    - their equation depends on the first input $P$ (from $G_1$). They define the intersection of the a line through $P$ and some multiple of $P$, with the curve $E(𝔽_{q^k})$,
     - they are evaluated at the coordinates of the second input element $Q$ (from $G_2$).
 
 It naturally follows that the arithmetic in the iterations of the Miller loop are performed over the base field $𝔽_q$. Thus, the verifier's native field is the base field $𝔽_q$ of the curve $E(𝔽_q)$.
@@ -68,12 +68,12 @@ It naturally follows that the arithmetic in the iterations of the Miller loop ar
 Before defining the scalar field, we need to define one more concept: groups.
 Each set of valid elliptic curve points $E(𝔽_q)$ automatically forms an abelian group $G$ under addition.
 Without diving into the formalism, let's state some practical properties of the group $G$ that we care about here:
-* some element of this group can generate all other group members via repeated addition of itself, call it the generator $g$
-* the order of the group is denoted as $n = $ #$E(𝔽_q)$
-* each element of the group has its own order, and it divides order $n$ of the whole group
-* some elements have a prime order. If such an element is chosen as the generator, it will generate a *cyclic* subgroup
-* in fact, all elements of the cyclic subgroup are its generators
-* if $r$ is the order of the subgroup, then for any $g$ in the subgroup, $r \cdot g = 1$
+* some element of this group can generate all other group members via repeated addition of itself, call it the generator $g$,
+* the order of the group is denoted as $n = $ #$E(𝔽_q)$,
+* each element of the group has its own order, and it divides order $n$ of the whole group,
+* some elements have a prime order for some prime $r$. If such an element is chosen as the generator, it will generate a *cyclic* subgroup of that order,
+* in fact, all non-zero elements of the prime-order cyclic subgroup are its generators,
+* for any element $h$ in the subgroup, $r \cdot h = 1$. This is a direct corollary of Lagrange's theorem.
 
 So what we are after is a subgroup $G$ of $E(𝔽_q)$ with a **large** prime order $r$. When we define curves suitable for pairing-based cryptography (PBC), we usually specify this $r$ in the curve parameters as the size of the scalar field $𝔽_r$ (alongside the previously mentioned $𝔽_q$).
 In practice, when working with SNARKs the data that is passed between the parties (such as the prover and the verifier) will be encoded as group elements, and the circuit representing our computation will be defined over the scalar field $𝔽_r$.
