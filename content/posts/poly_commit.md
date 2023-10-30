@@ -2,7 +2,7 @@
 title: "From one {point,poly} to multi {point,poly} commitment schemes"
 date: 2022-08-01T11:03:00+02:00
 draft: false
-math: true
+mathjax: true
 ---
 
 This is my first entry here, so I would highly appreciate any feedback.
