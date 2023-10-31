@@ -1,5 +1,5 @@
 ---
-title: "Need for Speed: mulitlinear Polynomial Commitment Schemes in Lasso and Jolt"
+title: "Need for Speed: efficient multilinear PCS in Lasso and Jolt"
 date: 2023-10-20T11:03:00+02:00
 draft: false
 mathjax: true
