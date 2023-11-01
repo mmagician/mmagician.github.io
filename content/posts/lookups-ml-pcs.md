@@ -94,7 +94,11 @@ In the case of Jolt, the commitment used in the lookup is actually a subset of t
 
 Note that in our trivial relation, the commitment to the vector used in the lookup, $x$, is the same as the commitment of the entire R1CS witness. In general this won't be the case and we would need to identify the subset of the R1CS witness that is going to be used in the lookup argument.
 
-For instance, for a witness $w$ of length $2n$ (for simplicity, assume $n$ is a power of two), imagine that only the first $n$ R1CS variables are part of the lookup argument. Rather than committing to the multilinear extension of the entire witness vector $\widetilde{w}$ directly, notice that:
+For example, for a witness $w$ of length $2n$ (for simplicity, assume $n$ is a power of two), imagine that only the first $n$ R1CS variables are part of the lookup argument. 
+
+Without diverging into the details, we state that the SNARK employed here to reason about R1CS satisfiability is [Spartan](https://eprint.iacr.org/2019/550). The Spartan prover commits to the witness $w$ by a way of low-degree extending it and then committing to that polynomial.
+
+With the perspective of adding a lookup argument, rather than committing to the MLE of the entire witness vector $\widetilde{w}$ directly, notice that:
 $$\widetilde{w}(x_1, ..., x_{\log(n)+1}) = (1-x_1) \times \widetilde{w_1}(x_2, ..., x_{\log(n) + 1}) + x_1 \times \widetilde{w_2}(x_2, ..., x_{\log(n) + 1})$$
 
 So instead of committing to $\widetilde{w}$, we can split the witness in two halves and commit to their MLEs separately: first to $\widetilde{w_1}(x_1, ..., x_{\log(n)})$, then to $\widetilde{w_2}(x_1, ..., x_{\log(n)})$. By the above relation, and for homomorphic commitments, the verifier can easily obtain the commitment to the full $w$ by himself, and later query the committed $w$ by asking for the opening of both $\widetilde{w_1}$ and $\widetilde{w_2}$ (at the same point) and combining the result.
