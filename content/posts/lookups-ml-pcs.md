@@ -111,31 +111,33 @@ We have so far only given an intuition for where lookups would be useful and how
 
 ### Lasso in a nutshell
 
-The Lasso verifier seeks to confirm that the relationship: $M \cdot t = a$ holds, where:
+The Lasso verifier seeks to confirm that the relationship $M \cdot t = a$ holds, where:
 
 - $t$ is a large lookup table with some “good” structure, of size $N$,
 - $a$ is the vector of elements to be looked up. If we want to perform $m$ lookups in our protocol, then $a$ has size $m$.
-- $M$ is the $m \times N$ matrix whose rows are unit vectors in such a way as to make the above true if and only if all entries of $a$ are contained in $t$.
+- $M$ is the $m \times N$ matrix whose rows are unit vectors in such a way as to make the above true if and only if all entries of $a$ are contained in $t$. Such a matrix always has exactly one non-zero entry per row. Indeed, if the i-th entry of $t$ is the j-th element of $a$, then the j-th row of $M$ is a one-hot vector concentrated in its i-th entry.
 
 To give a tiny example, set: $m  = 2$, $N = 4$. The prover wants to show that all elements of $a = (1, 3)$ are within the range $[0, 4)$ - i.e. they are contained in the table $(0, 1, 2, 3)$.
 
 Then a satisfying assignment would be:
 
-$$\begin{pmatrix}   0 & 1 & 0 & 0 \\\   0 & 0 & 0 & 1\end{pmatrix} \cdot \begin{pmatrix}   0 \\\ 1 \\\ 2 \\\ 3\end{pmatrix} = \begin{pmatrix}   1 \\ 3\end{pmatrix} $$
+$$\begin{pmatrix}   0 & 1 & 0 & 0 \\\   0 & 0 & 0 & 1\end{pmatrix} \cdot \begin{pmatrix}   0 \\\ 1 \\\ 2 \\\ 3\end{pmatrix} = \begin{pmatrix}   1 \\\ 3 \end{pmatrix} $$
 
-Typically, in our succinct protocol the matrices $a$ and $M$ are committed to and the verifier is only given oracle access to them, instantiated via a polynomial commitment scheme. We assume that $t$ has some “nice” properties to allow the verifier to efficiently work with it, as described later.
+Typically, in our succinct protocol the (low-degree extensions of the) matrices $a$ and $M$ are committed to and the verifier is only given oracle access to them, with the oracle instantiated via a polynomial commitment scheme. We assume that $t$ has some “nice” structural properties to allow the verifier to efficiently work with it, as described later.
 
 Unlike in our tiny example, $m$ is often **much** smaller than $N$: $m \ll N$.
 
 So committing to $a$ can be feasible, but notice that the number of entries of $M$ is actually larger by a factor of $m$ than the number of entries of the lookup table. If we want to use humongous lookup tables in our protocol (think $2^{128}$) then we certainly can’t allow ourselves to commit to that many elements of $M$.
 
-Instead, we leverage the following fact: most of the entries in $M$ are $0$: the matrix is sparse. More precisely, we won’t be committing to a matrix per se - rather, to its multilinear extension (MLE) (for more details on how to transform any function to low-degree extensions, see Sec. 3.5 of [Proofs, Args and Zero-Knowledge](https://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.pdf) survey by J. Thaler). Furthermore, rather than checking that the statement “$M \cdot t = a$” holds for all entries of $a$, we pick a random point $r \in \mathbb{F}^{\log(m)}$ and, if the below equality holds for $r$, then the original statement holds with high probability:
+Instead, we leverage the following fact: most of the entries in $M$ are $0$ (the matrix is sparse). More precisely, we won’t be committing to a matrix per se - rather, to its multilinear extension (MLE) (for more details on how to transform any function to low-degree extensions, see Sec. 3.5 of the [Proofs, Args and Zero-Knowledge](https://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.pdf) survey by J. Thaler). Furthermore, rather than checking that the statement $M \cdot t = a$ holds for all entries of $a$, we pick a random point $r \in \mathbb{F}^{\log(m)}$ and, if the equality below holds for $r$, then the original statement holds with high probability:
 
 $$
-\sum_{j \in \{0,1\}^{\log(N)}} \tilde {M}(r, j) \cdot \tilde t(j) = \tilde{a}(r)
+\sum_{j \in \\{0,1\\}^{\log(N)}} \widetilde {M}(r, j) \cdot \widetilde t(j) = \widetilde{a}(r),
 $$
 
-Finally, a quick note on the table $t$: we assume that $t$ has enough structure for the verifier to efficiently evaluate it at any single point. Since the above equation is begging to be sumchecked, at the conclusion of the sumcheck protocol we require the verifier to only query the table at one single point $r’$. Details of how $t$’s structure amends itself to efficient evaluation are not necessary for our objective here and can be found directly in the Lasso paper.
+where $M(x, y)$ is the function that maps indices x, y, represented as bits, to the entry $M_{x, y}$.
+
+Finally, a quick note on the table $t$: we assume that $t$ has enough structure for the verifier to efficiently evaluate it at any single point. Since the above equation is begging to be sumchecked, at the conclusion of the sumcheck protocol we require the verifier to only query the MLE of the table $\widetilde{t}$ at one single point $r’$. Details of how $t$’s structure lends itself to efficient evaluation are not necessary for our objective here and can be found directly in the Lasso paper.
 
 Therefore, we have established that in order to prove membership of all elements of $a$ in a lookup table $t$, Lasso needs a way to efficiently commit to a very large-but-sparse matrix $M$.
 
@@ -143,12 +145,12 @@ Therefore, we have established that in order to prove membership of all elements
 
 …or glossing over Spark & Surge.
 
-Spark is a way to commit to sparse multilinear polynomials with the prover costs proportional to “the sparseness” (i.e. for evaluations over the boolean hypercube, how many such evaluations are non-zero), rather than to the size of the hypercube itself, as would be the case for dense polynomials. The approach of Spark is to commit to such a sparse vector of evaluations, and later prove the correct computation of its dot product with the Lagrange basis evaluated at the random point queried by the verifier.
+Spark is a way to commit to sparse multilinear polynomials with the prover costs proportional to the number of non-zero evaluation over the boolean hypercube, rather than to the size of the hypercube itself, as would be the case for dense polynomials. The approach of Spark is to commit to such a sparse vector of evaluations, and later prove the correct computation of its dot product with the Lagrange basis evaluated at the random point queried by the verifier.
 
 We view any multilinear polynomial’s $\widetilde f$ over $v$ variables as:
 
 $$
-\widetilde{f}(x_1, ..., x_v) = \sum_{w \in \{0,1\}^v} f(w) \cdot \chi_w(x_1, ..., x_v)
+\widetilde{f}(x_1, ..., x_v) = \sum_{w \in \\{0,1\\}^v} f(w) \cdot \chi_w(x_1, ..., x_v)
 $$
 
 With $f(w)$ being the evaluations over the Boolean hypercube, and $\chi_w(x_1,…x_v)$ the multilinear Lagrange basis polynomial corresponding to $w$.
@@ -159,7 +161,7 @@ Therefore, if we can somehow evaluate $\chi_w(r_1,…r_v)$ efficiently for all $
 
 The authors of Lasso notice that Spark can be generalized to prove inner products for other purposes than just opening a polynomial at a random point.
 
-Surge is such a generalization, which replaces the Lagrange basis in above equation with any function efficiently evaluate-able at any $w$, specifically with the function $t(w)$ that for any index $w$ maps to an element of our table.
+Surge is such a generalization, which replaces the Lagrange basis in above equation with any function efficiently evaluateable at any $w$, specifically with the function $t(w)$ that maps any index $w$ to an element of our table.
 
 The way that Spark and Surge prove this relationship holds is by leveraging an adaptation of a technique called offline memory checking. Here is where we disappoint the reader and instead refer them to Sec. 5 of Lasso, where the scheme is described in a very accessible manner.
 
@@ -167,11 +169,11 @@ Instead, we simply summarize the costs in the full realization of offline memory
 
 ************Prover:************
 
-- Commit to $c$  polynomials over $\log(m)$ variables
+- Commit to $c$ polynomials over $\log(m)$ variables
 - Commit to $2\cdot \alpha$  polynomials over $\log(m)$ variables
 - Commit to $\alpha$ polynomials over $\log(N^{1/c})$ variables
 - Prove openings of $\alpha$  $\log(m)$-variate polynomials, all at one point $r_z$
-- Prove openings of $3$  $\log(m)$-variate and one $\log(N^{1/c})$-variate polynomials, all at one point $r_b$ (After batching sumchecks)
+- Prove openings of $3$  $\log(m)$-variate and one $\log(N^{1/c})$-variate polynomials, all at one point $r_b$ (after batching sumchecks)
 
 ******************Verifier****************** 
 
