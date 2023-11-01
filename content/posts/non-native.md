@@ -109,3 +109,6 @@ The advent of recent constructions such as accumulator schemes (see [here](https
 More on accumulator schemes another time.
 
 [^3]: There is still a pairing to be done, but it only happens once at the end of the protocol, outside of the recursion loop.
+
+---
+Author: Marcin Górny
