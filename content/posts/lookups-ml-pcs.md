@@ -43,31 +43,31 @@ In R1CS language, this would look something like:
 
 ```latex
 z = 
-[1  x  x_0 x_1 x_2 ... x_64   y]^T
+[1  x  x_0 x_1 x_2 ... x_63   y]^T
 
 A = 
 [0  1  0   0   0  ...   0     0] // for x^2 = y
 [0  0  1   0   0  ...   0     0] // for x_0^2 = x_0
 [0  0  0   1   0  ...   0     0] // for x_1^2 = x_1
 ...
-[0  0  0   0   0  ...   1     0] // for x_64^2 = x_64
-[0  0  1   2   4  ...   2^64  0] // for x_0 + 2*x_1 + ...  2^64*x_64 = x
+[0  0  0   0   0  ...   1     0] // for x_63^2 = x_64
+[0  0  1   2   4  ...   2^63  0] // for x_0 + 2*x_1 + ...  2^63*x_63 = x
 
 B = 
 [0  1  0   0   0  ...   0     0] // for x^2 = y, same as A
 [0  0  1   0   0  ...   0     0] // for x_0^2 = x_0, same as A
 [0  0  0   1   0  ...   0     0] // for x_1^2 = x_1, same as A
 ...
-[0  0  0   0   0  ...   1     0] // for x_64^2 = x_64, same as A
-[1  0  0   0   0  ...   0     0] // for x_0 + 2*x_1 + ...  2^64*x_64 = x, different!
+[0  0  0   0   0  ...   1     0] // for x_63^2 = x_63, same as A
+[1  0  0   0   0  ...   0     0] // for x_0 + 2*x_1 + ...  2^63*x_63 = x, different!
 
 C = 
 [0  0  0   0   0  ...   0     1] // for x^2 = y
 [0  0  1   0   0  ...   0     0] // for x_0^2 = x_0
 [0  0  0   1   0  ...   0     0] // for x_1^2 = x_1
 ...
-[0  0  0   0   0  ...   1     0] // for x_64^2 = x_64
-[0  1  0   0   0  ...   0     0] // for x_0 + 2*x_1 + ...  2^64*x_64 = x
+[0  0  0   0   0  ...   1     0] // for x_63^2 = x_63
+[0  1  0   0   0  ...   0     0] // for x_0 + 2*x_1 + ...  2^63*x_63 = x
 ```
 
 We’ve now assured the verifier that we have a valid solution to `x^2 = y` AND that `x` is small (fits into 64 bits). This carries a massive overhead, though: for every element `x` in our program that is not naturally a field element, such as `u64`, we need to add $64 + 1$ additional constraints to convince the verifier of its bit decomposition.
