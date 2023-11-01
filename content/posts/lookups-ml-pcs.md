@@ -136,10 +136,10 @@ Therefore, we have established that in order to prove membership of all elements
 
 Spark is a way to commit to sparse multilinear polynomials with the prover costs proportional to “the sparseness” (i.e. for evaluations over the boolean hypercube, how many such evaluations are non-zero), rather than to the size of the hypercube itself, as would be the case for dense polynomials. The approach of Spark is to commit to such a sparse vector of evaluations, and later prove the correct computation of its dot product with the Lagrange basis evaluated at the random point queried by the verifier.
 
-We view any multilinear polynomial’s $\tilde f$ over $v$ variables as:
+We view any multilinear polynomial’s $\widetilde f$ over $v$ variables as:
 
 $$
-\tilde{f}(x_1, ..., x_v) = \sum_{w \in \{0,1\}^v} f(w) \cdot \chi_w(x_1, ..., x_v)
+\widetilde{f}(x_1, ..., x_v) = \sum_{w \in \{0,1\}^v} f(w) \cdot \chi_w(x_1, ..., x_v)
 $$
 
 With $f(w)$ being the evaluations over the Boolean hypercube, and $\chi_w(x_1,…x_v)$ the multilinear Lagrange basis polynomial corresponding to $w$.
