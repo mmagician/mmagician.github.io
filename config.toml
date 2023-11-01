@@ -23,7 +23,7 @@ weight = 3
   showAllPostsArchive = false # default
 
   # Home page settings
-  description = "Hungry Cats Studio"
+  description = "Hungry Cats and blogs."
   mainSection = "/posts" # your main section
   mainSectionTitle = "Writings"
   tagsOverview = true # show tags overview by default.
