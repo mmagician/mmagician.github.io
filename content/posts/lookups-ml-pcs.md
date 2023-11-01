@@ -84,17 +84,22 @@ Suppose we want to prove that a variable in the computation is within the range 
 
 There has been a line of work exploring different techniques as well as trade-offs for achieving that goal. These have led to lookup arguments: protocols for convincing the verifier that one or more committed elements reside in some publicly known table $t$.
 
-However, it is not immediately clear how to combine a lookup argument with a general SNARK -  they represent different relations. 
+However, it is not immediately clear how to combine a lookup argument with a general SNARK, since they represent fundamentally different relations. The statement proved in a SNARK is about arithmetic circuit satisfiability, whereas a prover in a lookup argument convinces the verifier that all elements in a committed vector reside in a public table.
 
 We’ve seen some SNARKs utilizing the Plonk-ish arithmetization that have integrated a lookup into the relation, but it doesn’t seem to translate directly to SNARKs based on R1CS arithmetization. [This blog post](https://ethresear.ch/t/grolup-plookup-for-r1cs/14307) explores a potential idea borrowed from LegoSNARK for adding Plookup to Groth16.
 
 The key insight there is that we can combine two different arguments (e.g. for different parts of our computation) if they have an explicit (and similarly structured) commitment to the same witness - which is not the case e.g. for Groth16, where the proof contains the committed witness only implicitly. 
 
-In the case of Jolt, the commitments are actually the same - up to subsets.
+In the case of Jolt, the commitment used in the lookup is actually a subset of the commitment used for proving general circuit satisfiability. Think back to the previous example where the witness consisted of 65 elements: `w = [x x_0 x_2 ... x_63]`: now by strapping a lookup onto our SNARK, we can forego the long witness and keep just `w = [x]`. Aside from a shorter witness, we have immediately reduced the overhead in terms of number of constraints by discarding all the binary decomposition checks. Instead, to prove that $x$ fits into 64 bits we use a lookup argument into a giant-but-highly-structured table of $2^64$ elements.
 
-We would first identify the subset of the R1CS witness that is going to be used in the lookup argument. Note that this need not be the entire witness. For instance, for a witness $z$ of length $2n$ (for simplicity, assume $n$ is a power of two), imagine that only the first $n$ R1CS variables are part of the lookup argument. We can construct MLEs of each half as $\widetilde{z_1}(x_1, ..., x_{\log(n)})$, $\widetilde{z_2}(x_1, ..., x_{\log(n)})$ and commit to these separately. The first one is “fed” to the lookup argument. Notice that since: 
-$$\widetilde{z}(x_1, ..., x_{\log(n)+1}) = (1-x_1) \times \widetilde{z_1}(x_2, ..., x_{\log(n) + 1}) + x_1 \times \widetilde{z_2}(x_2, ..., x_{\log(n) + 1})$$
-the SNARK verifier can easily query $z$ by asking for the opening of both $\widetilde{z_1}$ and $\widetilde{z_2}$ (at the same point) and combining the result. This "chunking" of the commitment enables us to use one argument (e.g. SNARK) for the entirety of the committed witness and another argument (e.g. a lookup argument) for some subset of the committed elements.
+Note that in our trivial relation, the commitment to the vector used in the lookup, $x$, is the same as the commitment of the entire R1CS witness. In general this won't be the case and we would need to identify the subset of the R1CS witness that is going to be used in the lookup argument.
+
+For instance, for a witness $w$ of length $2n$ (for simplicity, assume $n$ is a power of two), imagine that only the first $n$ R1CS variables are part of the lookup argument. Rather than committing to the multilinear extension of the entire witness vector $\widetilde{w}$ directly, notice that:
+$$\widetilde{w}(x_1, ..., x_{\log(n)+1}) = (1-x_1) \times \widetilde{w_1}(x_2, ..., x_{\log(n) + 1}) + x_1 \times \widetilde{w_2}(x_2, ..., x_{\log(n) + 1})$$
+
+So instead of committing to $\widetilde{w}$, we can split the witness in two halves and commit to their MLEs separately: first to $\widetilde{w_1}(x_1, ..., x_{\log(n)})$, then to $\widetilde{w_2}(x_1, ..., x_{\log(n)})$. By the above relation, and for homomorphic commitments, the verifier can easily obtain the commitment to the full $w$ by himself, and later query the committed $w$ by asking for the opening of both $\widetilde{w_1}$ and $\widetilde{w_2}$ (at the same point) and combining the result.
+
+This technique enables us to use one argument (e.g. SNARK) on the entirety of the committed witness and another argument (e.g. a lookup argument) on a subset of the committed elements - while maintaining a link between the two parts.
 
 We have so far only given an intuition for where lookups would be useful and how to integrate them into an R1CS-arithmetized “multilinear SNARK”. We have intentionally skipped the details of how lookups actually work. In fact, Lasso mechanics differ substantially from most of the existing lookup arguments and so we will not cover these. For an excellent overview of the literature [“A Brief History of Lookup Arguments”](https://github.com/ingonyama-zk/papers/blob/main/lookups.pdf).
 
