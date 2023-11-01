@@ -118,9 +118,9 @@ Typically, in our succinct protocol the matrices $a$ and $M$ are committed to an
 
 Unlike in our tiny example, $m$ is often **much** smaller than $N$: $m \ll N$.
 
-So committing to $a$ can be feasible, but notice that the number of entires of $M$ is actually $m$-larger than the number of entires of the lookup table. If we want to use humongous lookup tables in our protocol (think $2^{128}$) then we certainly can’t allow ourselves to commit to that many elements of $M$.
+So committing to $a$ can be feasible, but notice that the number of entries of $M$ is actually larger by a factor of $m$ than the number of entries of the lookup table. If we want to use humongous lookup tables in our protocol (think $2^{128}$) then we certainly can’t allow ourselves to commit to that many elements of $M$.
 
-Instead, we leverage the following fact: most of the entires in $M$ are $0$: the matrix is sparse. More precisely, we won’t be committing to matrices per se - rather, to their low-degree extensions (for more details on how to transform any function to low-degree extensions, see Sec. 3.5 of [Proofs, Args and Zero-Knowledge](https://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.pdf) survey by J. Thaler). Furthermore, rather than checking that the statement “$M \cdot t = a$” holds for all entires of $a$, we pick a random (multilinear) point $r \in \mathbb{F}^{\log(m)}$ and, if the below equality holds for $r$, then the original statement holds with high probability:
+Instead, we leverage the following fact: most of the entries in $M$ are $0$: the matrix is sparse. More precisely, we won’t be committing to matrices per se - rather, to their low-degree extensions (for more details on how to transform any function to low-degree extensions, see Sec. 3.5 of [Proofs, Args and Zero-Knowledge](https://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.pdf) survey by J. Thaler). Furthermore, rather than checking that the statement “$M \cdot t = a$” holds for all entries of $a$, we pick a random (multilinear) point $r \in \mathbb{F}^{\log(m)}$ and, if the below equality holds for $r$, then the original statement holds with high probability:
 
 $$
 \sum_{j \in \{0,1\}^{\log(N)}} \tilde {M}(r, j) \cdot \tilde t(j) = \tilde{a}(r)
