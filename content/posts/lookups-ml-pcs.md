@@ -35,7 +35,7 @@ Where `x` is the witness and `y` is the public instance. We convert it to a R1CS
 A = [0 1 0]; B = [0 1 0]; C = [0 0 1];    z = [1 x y]^T
 ```
 
-The prover wants to convince the verifier that he knows a satisfying assignment to `z` such that $A\cdot z \circ B \cdot z = C \cdot z$ for a partially known `z = [1 x 25]`, say. By inspection we see that `x = 5`, but since we’re working with finite fields, there could be two solutions: the answer could also be $p - 5$, for a field modulus $p$. More precisely, a unique solution in the natural numbers (here, unsigned integers) is not "supported" with this relation over fields.
+The prover wants to convince the verifier that he knows a satisfying assignment to `z` such that $A\cdot z \odot B \cdot z = C \cdot z$ for a partially known `z = [1 x 25]`, say. By inspection we see that `x = 5`, but since we’re working with finite fields, there could be two solutions: the answer could also be $p - 5$, for a field modulus $p$. More precisely, a unique solution in the natural numbers (here, unsigned integers) is not "supported" with this relation over fields.
 
 The way to circumvent this issue is to introduce restrictions on the bit decomposition of `x`: constrain every bit to be either 0 or 1 (duh!), and require the weighted sum of all bits by suitable powers of two to equal $x$. To constrain each bit `x_i` of the **field element** `x` we impose the restriction that $x_i^2 = x_i$. These two conditions asssure that $x$ fits in the prescribed number of bits (e.g. 64) and we have a unique solution.
 
