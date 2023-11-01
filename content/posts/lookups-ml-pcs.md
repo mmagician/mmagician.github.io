@@ -12,7 +12,7 @@ In this write-up, we aim to provide context for the Need for Speed: why do we ne
 
 To put the problem into context, we first motivate the need for Lasso, and lookups in general, with an example. We then briefly describe the non-trivial marriage of lookup arguments with general SNARKs for R1CS. To complete the big picture, we provide a short introduction to Lasso’s solution to lookups - and where exactly the polynomial commitment schemes come up.
 
-In a follow up post, we will present the actual results benchmarking 4 PC schemes implemented with an arkworks backend: Ligero, Brakedown, Hyrax 
+In a follow-up post, we will present the actual results benchmarking 4 PC schemes implemented with an arkworks backend: Ligero, Brakedown, Hyrax 
 and KZG.
 
 ## Lasso overview
@@ -21,7 +21,7 @@ In summary, Lasso is a lookup argument (family). It lets the prover commit to a 
 
 ### Motivation for lookups
 
-First, we need to put Lasso, or lookup arguments in general, in some context. Suppose the prover has a long and complex program that he wishes to prove a correct execution of. A natural step would be to arithmetize this computation (e.g. using R1CS) and later use some off-the-shelf SNARK to succinctly generate a proof. The problem with this naive approach is that real-world computation rarely operates on finite field elements as required by R1CS - instead, the program uses e.g. unsigned 64-bit integers as the basis to construct some complex computation.
+First, we need to put Lasso, or lookup arguments in general, into some context. Suppose the prover has a long and complex program that he wishes to prove a correct execution of. A natural step would be to arithmetize this computation (e.g. using R1CS) and later use some off-the-shelf SNARK to succinctly generate a proof. The problem with this naive approach is that real-world computation rarely operates on finite field elements as required by R1CS - instead, the program uses e.g. unsigned 64-bit integers as the basis to construct some complex computation.
 
 This leads to a mismatch of representations and our arithmetization needs to account for this: otherwise the arithmetic circuit gives extra adversarial power to the prover by letting him “wrap around” the field modulus. Consider e.g. the simple program:
 
@@ -35,39 +35,39 @@ Where `x` is the witness and `y` is the public instance. We convert it to a R1CS
 A = [0 1 0]; B = [0 1 0]; C = [0 0 1];    z = [1 x y]^T
 ```
 
-The prover wants to convince the verifier that he knows a satisfying assignment to `z` such that $A.z \odot B.z = C.z$ for a partially known `z = [1 x 25]`, say. By inspection we see that `x = 5`, but since we’re working with finite fields, the answer could also be $p - 5$ where $p$ is the field modulus.
+The prover wants to convince the verifier that he knows a satisfying assignment to `z` such that $A\cdot z \circ B \cdot z = C \cdot z$ for a partially known `z = [1 x 25]`, say. By inspection we see that `x = 5`, but since we’re working with finite fields, there could be two solutions: the answer could also be $p - 5$, for a field modulus $p$. More precisely, a unique solution in natural numbers (here, unsigned integers) is not "supported" with this relation over fields.
 
-The way to circumvent this issue is by introducing further restrictions on `x`: binary-decompose it and constrain every bit to be either 0 or 1 (duh!). For each bit `x_i` of the **field element** `x` we impose the restriction that $x_i*(1-x_i) = 0 \rightarrow  x_i^2 = x_i$. Finally we ensure that the “weighted sum” of all bits adds up to $x$.
+The way to circumvent this issue is to introduce restrictions on the bit decomposition of `x`: constrain every bit to be either 0 or 1 (duh!), and require the weighted sum of all bits by suitable powers of two to equal $x$. To constrain each bit `x_i` of the **field element** `x` we impose the restriction that $x_i^2 = x_i$. These two conditions asssure that $x$ fits in the prescribed number of bits (e.g. 64) and we have a unique solution.
 
 In R1CS language, this would look something like:
 
 ```latex
 z = 
-[1 x x_0 x_1 x_2 ... x_64   y]^T
+[1  x  x_0 x_1 x_2 ... x_64   y]^T
 
 A = 
-[0 1  0   0   0  ...   0     0] // for x^2 = y
-[0 0  1   0   0  ...   0     0] // for x_0^2 = x_0
-[0 0  0   1   0  ...   0     0] // for x_1^2 = x_1
+[0  1  0   0   0  ...   0     0] // for x^2 = y
+[0  0  1   0   0  ...   0     0] // for x_0^2 = x_0
+[0  0  0   1   0  ...   0     0] // for x_1^2 = x_1
 ...
-[0 0  0   0   0  ...   1     0] // for x_64^2 = x_64
-[0 0  1   2   4  ...   2^64 0] // for x_0 + 2*x_1 + ...  2^64*x_64 = x
+[0  0  0   0   0  ...   1     0] // for x_64^2 = x_64
+[0  0  1   2   4  ...   2^64  0] // for x_0 + 2*x_1 + ...  2^64*x_64 = x
 
 B = 
-[0 1  0   0   0  ...   0     0] // for x^2 = y, same as A
-[0 0  1   0   0  ...   0     0] // for x_0^2 = x_0, same as A
-[0 0  0   1   0  ...   0     0] // for x_1^2 = x_1, same as A
+[0  1  0   0   0  ...   0     0] // for x^2 = y, same as A
+[0  0  1   0   0  ...   0     0] // for x_0^2 = x_0, same as A
+[0  0  0   1   0  ...   0     0] // for x_1^2 = x_1, same as A
 ...
-[0 0  0   0   0  ...   1     0] // for x_64^2 = x_64, same as A
-[0 0  1   1   1  ...   1     0] // for x_0 + 2*x_1 + ...  2^64*x_64 = x, different!
+[0  0  0   0   0  ...   1     0] // for x_64^2 = x_64, same as A
+[1  0  0   0   0  ...   0     0] // for x_0 + 2*x_1 + ...  2^64*x_64 = x, different!
 
 C = 
-[0 0  0   0   0  ...   0     1] // for x^2 = y
-[0 0  1   0   0  ...   0     0] // for x_0^2 = x_0
-[0 0  0   1   0  ...   0     0] // for x_1^2 = x_1
+[0  0  0   0   0  ...   0     1] // for x^2 = y
+[0  0  1   0   0  ...   0     0] // for x_0^2 = x_0
+[0  0  0   1   0  ...   0     0] // for x_1^2 = x_1
 ...
-[0 0  0   0   0  ...   1     0] // for x_64^2 = x_64
-[0 1  0   0   0  ...   1     0] // for x_0 + 2*x_1 + ...  2^64*x_64 = x
+[0  0  0   0   0  ...   1     0] // for x_64^2 = x_64
+[0  1  0   0   0  ...   0     0] // for x_0 + 2*x_1 + ...  2^64*x_64 = x
 ```
 
 We’ve now assured the verifier that we have a valid solution to `x^2 = y` AND that `x` is small (fits into 64 bits). This carries a massive overhead, though: for every element `x` in our program that is not naturally a field element, such as `u64`, we need to add $64 + 1$ additional constraints to convince the verifier of its bit decomposition.
@@ -76,25 +76,27 @@ Can we do better?
 
 ### Enter the lookup (table)
 
-The motivating question for lookups is then: instead of bit decomposition, can we do better?
+The motivating question is then: could we use lookups instead of bit decomposition?
 
 Lookup arguments phrase the question as following:
 
 Suppose we want to prove that a variable in the computation is within the range $[0, 2^{64})$. Can we show that it is one of the values in some publicly known table $t$, whose entries are all the integers between $0$ and $2^{64} - 1$?
 
-There has been a line of work exploring different techniques as well as trade-offs for achieving that goal. These have led to lookup arguments: protocols for convincing the verifier that one or more committed elements reside in some publicly known table $T$.
+There has been a line of work exploring different techniques as well as trade-offs for achieving that goal. These have led to lookup arguments: protocols for convincing the verifier that one or more committed elements reside in some publicly known table $t$.
 
 However, it is not immediately clear how to combine a lookup argument with a general SNARK -  they represent different relations. 
 
 We’ve seen some SNARKs utilizing the Plonk-ish arithmetization that have integrated a lookup into the relation, but it doesn’t seem to translate directly to SNARKs based on R1CS arithmetization. [This blog post](https://ethresear.ch/t/grolup-plookup-for-r1cs/14307) explores a potential idea borrowed from LegoSNARK for adding Plookup to Groth16.
 
-The key insight there is that we can combine two different arguments (e.g. for different parts of our computation) if they have an explicit (and similarly structured) commitment to the same witness - which e.g. is not the case for Groth16, where the proof contains the committed witness only implicitly. 
+The key insight there is that we can combine two different arguments (e.g. for different parts of our computation) if they have an explicit (and similarly structured) commitment to the same witness - which is not the case e.g. for Groth16, where the proof contains the committed witness only implicitly. 
 
 In the case of Jolt, the commitments are actually the same - up to subsets.
 
-We would first identify the subset of the R1CS witness that is going to be used in the lookup argument. Note that this need not be the entire witness, e.g. for a witness $z$ of length $2n$, imagine that only the first $n$ R1CS variables are part of the lookup argument. We can construct MLEs of each half as $\tilde{z_1}(x_1, ..., x_{log(n)})$, $\tilde{z_2}(x_1, ..., x_{log(n)})$ and commit to these separately. The first one is “fed” to the lookup argument. Notice that since: $\tilde{z}(x_1, ..., x_{log(n)+1}) = (1-x_1) \times \tilde{z_1}(x_2, ..., x_{log(n) + 1}) + x_1 \times \tilde{z_2}(x_2, ..., x_{log(n) + 1})$, the SNARK verifier can easily query $z$ by asking for the opening of both $\tilde{z_1}$ and $\tilde{z_2}$ (at the same point) and easily combining the result.
+We would first identify the subset of the R1CS witness that is going to be used in the lookup argument. Note that this need not be the entire witness. For instance, for a witness $z$ of length $2n$ (for simplicity, aassume $n$ is a power of two), imagine that only the first $n$ R1CS variables are part of the lookup argument. We can construct MLEs of each half as $\widetilde{z_1}(x_1, ..., x_{\log(n)})$, $\widetilde{z_2}(x_1, ..., x_{\log(n)})$ and commit to these separately. The first one is “fed” to the lookup argument. Notice that since: 
+$$\widetilde{z}(x_1, ..., x_{\log(n)+1}) = (1-x_1) \times \widetilde{z_1}(x_2, ..., x_{\log(n) + 1}) + x_1 \times \widetilde{z_2}(x_2, ..., x_{\log(n) + 1})$$
+the SNARK verifier can easily query $z$ by asking for the opening of both $\widetilde{z_1}$ and $\widetilde{z_2}$ (at the same point) and combining the result. This "chunking" of the commitment enables us to use one argument (e.g. SNARK) for the entirety of the committed witness and another argument (e.g. a lookup argument) for some subset of the committed elements.
 
-We have so far only given an intuition for where lookups would be useful and how to integrate them into an R1CS-arithmetized, “multilinear SNARK”. We have intentionally skipped the details of how lookups actually work. In fact, Lasso mechanics differ substantially from most of the existing lookup arguments and so we will not cover these. For an excellent overview of the literature [“A Brief History of Lookup Arguments”](https://github.com/ingonyama-zk/papers/blob/main/lookups.pdf).
+We have so far only given an intuition for where lookups would be useful and how to integrate them into an R1CS-arithmetized “multilinear SNARK”. We have intentionally skipped the details of how lookups actually work. In fact, Lasso mechanics differ substantially from most of the existing lookup arguments and so we will not cover these. For an excellent overview of the literature [“A Brief History of Lookup Arguments”](https://github.com/ingonyama-zk/papers/blob/main/lookups.pdf).
 
  
 
