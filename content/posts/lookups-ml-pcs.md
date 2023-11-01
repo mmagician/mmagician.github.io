@@ -21,7 +21,7 @@ In summary, Lasso is a lookup argument (family). It lets the prover commit to a 
 
 ### Motivation for lookups
 
-First, we need to put Lasso, or lookup arguments in general, into some context. Suppose the prover has a long and complex program that he wishes to prove a correct execution of. A natural step would be to arithmetize this computation (e.g. using R1CS) and later use some off-the-shelf SNARK to succinctly generate a proof. The problem with this naive approach is that real-world computation rarely operates on finite field elements as required by R1CS - instead, the program makes use of CPU friendly types, such as 64-bits integer, to construct some complex computation.
+First, we need to put Lasso, or lookup arguments in general, into some context. Suppose the prover has a long and complex program that he wishes to prove a correct execution of. A natural step would be to arithmetize this computation (e.g. using R1CS) and later use some off-the-shelf SNARK to succinctly generate a proof. The problem with this naive approach is that real-world computation rarely operates on finite field elements as required by R1CS - instead, the program makes use of CPU friendly types, such as the 64-bit integers, to construct some complex computation.
 
 This leads to a mismatch of representations and our arithmetization needs to account for this: otherwise the arithmetic circuit gives extra adversarial power to the prover by letting him “wrap around” the field modulus. Consider e.g. the simple program:
 
@@ -96,7 +96,7 @@ Note that in our trivial relation, the commitment to the vector used in the look
 
 For example, for a witness $w$ of length $2n$ (for simplicity, assume $n$ is a power of two), imagine that only the first $n$ R1CS variables are part of the lookup argument. 
 
-Without diverging into the details, we state that the SNARK employed here to reason about R1CS satisfiability is [Spartan](https://eprint.iacr.org/2019/550). The Spartan prover commits to the witness $w$ by a way of low-degree extending it and then committing to that polynomial.
+Without diverging into the details, we state that the SNARK employed here to reason about R1CS satisfiability is [Spartan](https://eprint.iacr.org/2019/550). The Spartan prover low-degree extends the witness and then commits to that polynomial.
 
 With the perspective of adding a lookup argument, rather than committing to the MLE of the entire witness vector $\widetilde{w}$ directly, notice that:
 $$\widetilde{w}(x_1, ..., x_{\log(n)+1}) = (1-x_1) \times \widetilde{w_1}(x_2, ..., x_{\log(n) + 1}) + x_1 \times \widetilde{w_2}(x_2, ..., x_{\log(n) + 1})$$
