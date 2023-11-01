@@ -21,7 +21,7 @@ In summary, Lasso is a lookup argument (family). It lets the prover commit to a 
 
 ### Motivation for lookups
 
-First, we need to put Lasso, or lookup arguments in general, into some context. Suppose the prover has a long and complex program that he wishes to prove a correct execution of. A natural step would be to arithmetize this computation (e.g. using R1CS) and later use some off-the-shelf SNARK to succinctly generate a proof. The problem with this naive approach is that real-world computation rarely operates on finite field elements as required by R1CS - instead, the program uses e.g. unsigned 64-bit integers as the basis to construct some complex computation.
+First, we need to put Lasso, or lookup arguments in general, into some context. Suppose the prover has a long and complex program that he wishes to prove a correct execution of. A natural step would be to arithmetize this computation (e.g. using R1CS) and later use some off-the-shelf SNARK to succinctly generate a proof. The problem with this naive approach is that real-world computation rarely operates on finite field elements as required by R1CS - instead, the program makes use of CPU friendly types, such as 64-bits integer, to construct some complex computation.
 
 This leads to a mismatch of representations and our arithmetization needs to account for this: otherwise the arithmetic circuit gives extra adversarial power to the prover by letting him “wrap around” the field modulus. Consider e.g. the simple program:
 
@@ -35,7 +35,7 @@ Where `x` is the witness and `y` is the public instance. We convert it to a R1CS
 A = [0 1 0]; B = [0 1 0]; C = [0 0 1];    z = [1 x y]^T
 ```
 
-The prover wants to convince the verifier that he knows a satisfying assignment to `z` such that $A\cdot z \circ B \cdot z = C \cdot z$ for a partially known `z = [1 x 25]`, say. By inspection we see that `x = 5`, but since we’re working with finite fields, there could be two solutions: the answer could also be $p - 5$, for a field modulus $p$. More precisely, a unique solution in natural numbers (here, unsigned integers) is not "supported" with this relation over fields.
+The prover wants to convince the verifier that he knows a satisfying assignment to `z` such that $A\cdot z \circ B \cdot z = C \cdot z$ for a partially known `z = [1 x 25]`, say. By inspection we see that `x = 5`, but since we’re working with finite fields, there could be two solutions: the answer could also be $p - 5$, for a field modulus $p$. More precisely, a unique solution in the natural numbers (here, unsigned integers) is not "supported" with this relation over fields.
 
 The way to circumvent this issue is to introduce restrictions on the bit decomposition of `x`: constrain every bit to be either 0 or 1 (duh!), and require the weighted sum of all bits by suitable powers of two to equal $x$. To constrain each bit `x_i` of the **field element** `x` we impose the restriction that $x_i^2 = x_i$. These two conditions asssure that $x$ fits in the prescribed number of bits (e.g. 64) and we have a unique solution.
 
@@ -92,7 +92,7 @@ The key insight there is that we can combine two different arguments (e.g. for d
 
 In the case of Jolt, the commitments are actually the same - up to subsets.
 
-We would first identify the subset of the R1CS witness that is going to be used in the lookup argument. Note that this need not be the entire witness. For instance, for a witness $z$ of length $2n$ (for simplicity, aassume $n$ is a power of two), imagine that only the first $n$ R1CS variables are part of the lookup argument. We can construct MLEs of each half as $\widetilde{z_1}(x_1, ..., x_{\log(n)})$, $\widetilde{z_2}(x_1, ..., x_{\log(n)})$ and commit to these separately. The first one is “fed” to the lookup argument. Notice that since: 
+We would first identify the subset of the R1CS witness that is going to be used in the lookup argument. Note that this need not be the entire witness. For instance, for a witness $z$ of length $2n$ (for simplicity, assume $n$ is a power of two), imagine that only the first $n$ R1CS variables are part of the lookup argument. We can construct MLEs of each half as $\widetilde{z_1}(x_1, ..., x_{\log(n)})$, $\widetilde{z_2}(x_1, ..., x_{\log(n)})$ and commit to these separately. The first one is “fed” to the lookup argument. Notice that since: 
 $$\widetilde{z}(x_1, ..., x_{\log(n)+1}) = (1-x_1) \times \widetilde{z_1}(x_2, ..., x_{\log(n) + 1}) + x_1 \times \widetilde{z_2}(x_2, ..., x_{\log(n) + 1})$$
 the SNARK verifier can easily query $z$ by asking for the opening of both $\widetilde{z_1}$ and $\widetilde{z_2}$ (at the same point) and combining the result. This "chunking" of the commitment enables us to use one argument (e.g. SNARK) for the entirety of the committed witness and another argument (e.g. a lookup argument) for some subset of the committed elements.
 
@@ -106,7 +106,7 @@ The Lasso verifier seeks to confirm that the relationship: $M \cdot t = a$ holds
 
 - $t$ is a large lookup table with some “good” structure, of size $N$,
 - $a$ is the vector of elements to be looked up. If we want to perform $m$ lookups in our protocol, then $a$ has size $m$.
-- $M$ is the $m \times N$ matrix whose rows are unit vectors in such a way as to make the above true if and only if all entires of $a$ are contained in $t$.
+- $M$ is the $m \times N$ matrix whose rows are unit vectors in such a way as to make the above true if and only if all entries of $a$ are contained in $t$.
 
 To give a tiny example, set: $m  = 2$, $N = 4$. The prover wants to show that all elements of $a = (1, 3)$ are within the range $[0, 4)$ - i.e. they are contained in the table $(0, 1, 2, 3)$.
 
