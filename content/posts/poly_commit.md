@@ -182,3 +182,6 @@ $$
 For a full proof, refer to the [Plonk](https://eprint.iacr.org/2019/953.pdf) paper, Claim 4.6.
 
 Notice that the described protocol is not optimal for the verifier - I might explore optimisations in a future post.
+
+---
+Author: Marcin Górny

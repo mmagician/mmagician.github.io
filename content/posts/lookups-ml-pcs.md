@@ -200,3 +200,9 @@ As with everything, it depends. Some possible targets are:
 Context choice will play an important role here. For the use cases where we care about on-chain verification, we need to be mindful of gas costs associated with the verification, as well as proof sizes that we upload. Optimizing for verifier speed will often incur additional prover complexity, which might become prohibitive for large computation. For big enough programs, proof composition might bridge this gap.
 
 In the next post we will explore the different tradeoffs. We will present concrete results for native prover-verifier runtimes, as well as benchmarks and estimates for proof composition with the verifier encoded as a halo2 circuit.
+
+
+---
+Author: Marcin Górny
+
+Thank you Antonio Mejías Gil & Giacomo Fenzi for helpful comments and discussions.
