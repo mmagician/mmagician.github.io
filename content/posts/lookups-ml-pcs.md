@@ -172,7 +172,7 @@ Instead, we simply summarize the costs in the full realization of offline memory
 - Commit to $c$ polynomials over $\log(m)$ variables
 - Commit to $2\cdot \alpha$  polynomials over $\log(m)$ variables
 - Commit to $\alpha$ polynomials over $\log(N^{1/c})$ variables
-- Prove openings of $\alpha$  $\log(m)$-variate polynomials, all at one point $r_z$
+- Prove openings of $\alpha$  $\log(m)$-variate polynomials, all at one point $r_z$. These can be batched for any PCS with homomorphic commitments
 - Prove openings of $3$  $\log(m)$-variate and one $\log(N^{1/c})$-variate polynomials, all at one point $r_b$ (after batching sumchecks)
 
 ******************Verifier****************** 
